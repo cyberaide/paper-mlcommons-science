@@ -1,0 +1,81 @@
+%!TEX root = paper.tex
+\subsection{CANDLE-UNO ({\tt candle-uno})} % (Regression)}
+
+The CANDLE (Exascale Deep Learning and Simulation Enabled Precision Medicine for Cancer) project\footnote{\url{https://github.com/ECP-CANDLE/Benchmarks}} aims to implement deep learning architectures that are relevant to problems in cancer research, addressing problems at three biological scales: cellular (Pilot1 or P1), molecular (Pilot2 or P2), and population (Pilot3 or P3), resulting three mainstreams of benchmarks covering these pilots. The UNO version of the CANDLE suite is a P1 benchmark, which is formed out of problems and data at the cellular level. The high level goal of the problems behind the P1 benchmarks is to predict drug response based on molecular features of tumor cells and drug descriptors. We summarize the key aspects of this benchmark in Table~\ref{tab:uno-summary}, and a detailed description of the objectives, metrics, data and the reference implementation below.
+
+\begin{small}
+\begin{table}
+    \caption{Summary of the {\tt candle-uno} benchmark.}\label{tab:uno-summary}
+    %\resizebox{1.0\textwidth}{!}{
+    \begin{center}
+    \begin{tabular}{p{0.4\columnwidth}p{0.6\columnwidth}}
+    \hline
+    \hline
+    {\bf Description} &
+    The Pilot 1 Unified Drug Response Predictor benchmark, Uno to
+    enable drug discovery, drug response prediction from 
+    cell lines.\\
+    \hline
+    {\bf Objectives}
+    & Predictions of tumor response to drug treatments, based on molecular features of tumor cells and drug descriptors \\
+    \hline
+    {\bf Challenge Stream} & Regression\\
+    \hline
+    {\bf Domain} & Healthcare \\
+    \hline
+    {\bf Metrics} & Validation loss with a minimum score of $0.0054$ \\
+    \hline
+    {\bf Data} & Type: \\
+            & Size: 6.4GB \\
+            & Training samples: 423,952 \\
+            & Validation samples: 52,994 \\
+            & Location : ALCF Servers~\cite{candle-uno-data} \\
+    \hline
+    {\bf Reference implementation}  & Model:  Multi-task Learning-based custom model \\
+    & Code \& Instructions:  \cite{candle-uno-code-github} (see README)\\
+    & Ideal performance: 10,667 samples/sec on a single A100 GPU for a batch size of 64 \\
+    \hline
+    \end{tabular}
+    \end{center}
+    %}
+    \end{table}
+\end{small}
+
+\noindent {\bf Benchmarking Objectives and Metrics:} The goal is to predict tumor response to single and paired drugs, based on molecular features of tumor cells across multiple data sources. It aims to accelerate the scientific goal of establishing the effectiveness of drugs. The ML component aims to accelerate this aspect using ML-based prediction of response values. As such, it is a regression problem, with the science metric being mean absolute error (MAE) between the predicted and ground truth values. On the performance front, the metric is responses predicted per second for a given batch size. 
+
+\noindent {\bf Data:} Combined dose response data relies on  a number of sources that are specific drug responses to cancer conditions. These include 
+The Cancer Therapeutics Response Portal (CTRP), The Genomics of Drug Sensitivity in Cancer (GDSC), The NCI Sarcoma (SCL), The NCI Small Cell Lung Cancer (SCLC), The NCI-60 Human Cancer Cell Line Screen single drug response  (NCI60), A Large Matrix of Anti-Neoplastic Agent Combinations drug pair response (ALMANAC.FG, ALMANAC.FF, ALMANAC.1A), The Genentech Cell Line Screening Initiative (gCSI) and The Cancer Cell Line Encyclopedia (CCLE).  The ML model can be trained on any subset of a dataset obtained from these dose response data sources. The benchmark relies on a dataset that includes 
+both single drug dose response measurements pair dose response measurements. More specifically, there are $27,769,716$ single drug dose response measurements and $3,686,475$ drug pair dose response measurements. The combined raw dose response data has $3,070$ unique samples and $53,520$ unique
+drugs. For the scope of this work, we used the AUC configuration of Uno
+that utilizes a single data source, namely, CCLE. We show the data distribution between the samples in Table~\ref {tab:uno_drug_conf}. The training can be accelerated by using a pre-staged dataset file. This static dataset can, however,  be pre-built. The datasets are publicly available from the CANDLE site~\cite{candle-uno-data}. These are directly downloadable with relevant download scripts, including a pre-built static dataset to simplify the  deployment.
+% ~\cite{candle-uno-data-3}.
+
+
+\begin{small}
+\begin{table}[htb]
+        \caption{The data distribution between the single and pair drug samples.}
+    \label{tab:uno_drug_conf}
+    \centering
+    \begin{tabular}{l|rrrrr}
+    \hline
+    & {\bf Growth}  & {\bf Sample}    & {\bf Drug1} & {\bf Drug2} & {\bf MedianDose} \\
+    \hline
+        ALMANAC.1A  & 208,605   & 60   & 102   & 102 & 7.000000\\
+        ALMANAC.FF  & 2,062,098  & 60   & 92    & 71  & 6.698970 \\
+        ALMANAC.FG  & 1,415,772  & 60   & 100   & 29  & 6.522879 \\
+        CCLE        & 93,251    & 504  & 24    & 0   & 6.602060 \\
+        CTRP        & 6,171,005  & 887  & 544   & 0   & 6.585027 \\
+        GDSC        & 1,894,212  & 1,075 & 249   & 0   & 6.505150 \\
+        NCI60       & 18,862,308 & 59   & 52,671 & 0   & 6.000000 \\
+        SCL         & 301,336   & 65   & 445   & 0   & 6.908485 \\
+        SCLC        & 389,510   & 70   & 526   & 0   & 6.908485 \\
+        gCSI        & 58,094    & 409  & 16    & 0   & 7.430334 \\
+\hline
+    \end{tabular}
+\end{table}
+\end{small}
+
+
+\noindent {\bf Reference implementation:} The reference implementation implements a deep learning architecture with 21~M parameters in TensorFlow framework in Python. The code is publicly available on GitHub. It can be run in both training and inference modes. However, this benchmark is defined to be training focused.  A dedicated script in the repository downloads all required datasets. The primary metric to evaluate for this application is the model throughput (samples per second). The model is said to converge when the validation loss reaches a certain threshold, for example 0.0054. The throughput is then measured for the last epoch when the model converges. With the required packages in the  software stack, Uno can be run on diverse systems. More details on running Uno can be found in the repository. 
+
+

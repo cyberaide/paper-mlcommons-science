@@ -1,0 +1,85 @@
+\documentclass[runningheads]{llncs}[10pt]
+
+\usepackage{textcomp}
+\usepackage{todonotes}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{comment}
+\usepackage{placeins}
+\usepackage{subcaption}
+
+\input{commands}
+
+\begin{document}
+
+
+\title{AI Benchmarking for Science: Efforts from the MLCommons Science Working Group}
+
+
+\author{%
+Jeyan~Thiyagalingam\inst{1}$^\spadesuit$,
+Gregor~von~Laszewski\inst{2},
+Junqi~Yin\inst{3},
+Murali~Emani\inst{4},
+Juri~Papay\inst{1},
+Gregg~Barrett\inst{5},
+Piotr~Luszczek\inst{6},
+Aristeidis~Tsaris\inst{3},
+Christine~Kirkpatrick\inst{7},
+Feiyi~Wang\inst{3},
+Tom~Gibbs\inst{8},
+Venkatram~Vishwanath\inst{4},
+Mallikarjun~Shankar\inst{3},
+Geoffrey~Fox\inst{2}$^\clubsuit$,
+Tony~Hey\inst{1}
+}
+
+% Tony Hey \inst{1}\orcidID{0000-0001-6782-3691} \and 
+% Geoffrey C. Fox \inst{2}\orcidID{0000-0003-1017-1391} \and \\
+% Gregg Barrett \inst{3}\orcidID{0000-0001-9346-9446} \and 
+% Juri Papay \inst{1} \and
+% Gregor von Laszewski \inst{2}\orcidID{0000-0001-9558-179X} \and \\
+% Jeyan Thiyagalingam \inst{1}\orcidID{0000-0002-2167-1343} \and \\
+% Christine Kirkpatrick \inst{4}\orcidID{0000-0002-4451-8042} \and 
+% Mallikarjun Shankar \inst{5} \and \\
+% Junqi Yin \inst{5} \and
+% Aristeidis Tsaris \inst{5} \and
+% Feiyi Wang \inst{5} \and
+% Tom Gibbs \inst{6} \and
+% Murali Emani\inst{7} \and
+% Piotr Luszczek\inst{8}\orcidID{0000-0002-0089-6965}
+
+\authorrunning{Jeyan Thiyagalingam et al.}
+\titlerunning{AI Benchmarks from MLCommons Science}
+
+\institute{%
+Rutherford Appleton Laboratory, Harwell Campus, Didcot, OX11 0QX, UK 
+\and University of Virginia, Charlottesville, VA 22904-4298, USA
+\and Oak Ridge National Laboratory, Oak Ridge, TN 37831, USA
+\and Argonne National Laboratory, Lemont, IL 60439, USA  
+\and Cirrus AI, Johannesburg, RSA
+\and University of Tennessee, Knoxville, TN 37996, USA
+\and SDSC, 10100 Hopkins Dr, La Jolla, CA 92093
+\and NVIDIA
+%\url{http://www.mlcommons.org}
+\\
+Corresponding Authors: $^\spadesuit$\email{t.jeyan@stfc.ac.uk}, $^\clubsuit$\email{vxj6mb@virginia.edu}
+}
+
+
+\maketitle
+
+\input{abstract}
+
+\input{intro}
+\input{science-wg}
+\input{benchmarks}
+\input{evaluation}
+\input{conclusions}
+\input{acks}
+\bibliographystyle{splncs04}
+\bibliography{paper}
+
+\end{document}
